@@ -2,11 +2,45 @@
  <head>
  </head>
  <body>
-   <form action="https://usebasin.com/f/b04f059a92e3" method="POST">
-   <label for="email-address">Email Address</label>
-   <input type="email" id="email" name="email" required>
-   <input type="text" id="body" name="body" optional>
-   <button type="submit">Submit</button>
-</form>
+
+  <div>
+    <form action="#" id="callbackForm" class="contact-form">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" required id="email" class="form-control" placeholder="" autocomplete="email" name="email" />
+        </div>
+        <div class="form-group">
+            <label for="name">Message</label>
+            <input id="message" type="text" class="form-control" placeholder="" name="message" />
+        </div>
+        <button type="submit" id="sendMessageButton" class="btn btn-primary btn-block">
+            Send message
+        </button>
+    </form>
+
+    <script>
+        $("#callbackForm").submit(function(e) {
+            e.preventDefault();
+            var replyTo = $("#email");
+            var name = $("#name");
+            var data = {
+                "sendTo": "<your_email>",
+                "replyTo": replyTo.val(),
+                "message": message.val()
+            };
+            var url = "<API_GATEWAY_URL>";
+            $.ajax({
+                url: url,
+                type: 'POST',
+                crossDomain: true,
+                data: JSON.stringify(data),
+                dataType: 'json',
+                contentType: "application/json"
+            });
+        });
+    </script>
+</div>
+  
+  
  </body>
 </html>
