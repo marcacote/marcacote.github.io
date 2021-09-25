@@ -38,7 +38,7 @@ exports.handler = async(event, context, callback) => {
             },
             Subject: {
                 Charset: "UTF-8",
-                Data: request.subject
+                Data: "Nouveau message de quelqu'un sur mon site web!"
             }
         },
         Source: sendToEmail,
