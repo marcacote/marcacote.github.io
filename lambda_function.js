@@ -31,23 +31,18 @@ exports.handler = async(event, context, callback) => {
         },
         Message: {
             Body: {
-                Html: {
+                Text: {
                     Charset: "UTF-8",
-                    Data: `
-                    <body>
-                    <p>${request.message}</p>
-                    <pre>${JSON.stringify(request, undefined, 2)}</pre>
-                    </body>
-                    `
+                    Data: request.message
                 }
             },
             Subject: {
                 Charset: "UTF-8",
-                Data: [request._subject]
+                Data: request.subject
             }
         },
-        Source: `${request.name || "Name unknown"} <your_address@gmail.com>`,
-        ReplyToAddresses: [request._replyTo]
+        Source: sendToEmail,
+        ReplyToAddresses: [request.replyTo]
     };
 
     const sendPromise = new aws.SES()
