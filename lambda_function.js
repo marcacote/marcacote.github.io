@@ -23,22 +23,7 @@ exports.handler = async(event, context, callback) => {
     const requestBody = event.body;
     const request = JSON.parse(requestBody);
     console.log(request);
-    const allowedDomains = ['example.com', 'jpomykala.me', 'yourdomain.com'];
-    const sendToEmail = request._sendTo || "";
-    let domain = "";
-    try {
-        const emailSplit = sendToEmail.split('@');
-        const arraySize = emailSplit.length;
-        domain = emailSplit[arraySize - 1];
-        const domainIsAllowed = allowedDomains.includes(domain);
-        if (!domainIsAllowed) {
-            throw new Error("Destination email not allowed for domain=", domain);
-        }
-    }
-    catch (e) {
-        console.warn(e.message, e.name, sendToEmail);
-        callback(JSON.stringify(errorResponse));
-    }
+    const sendToEmail = "YOUR_EMAIL_ADDRESSzxcid8nn56h@gmail.com";
 
     const params = {
         Destination: {
