@@ -43,7 +43,7 @@ exports.handler = async(event, context, callback) => {
             },
             Subject: {
                 Charset: "UTF-8",
-                Data: `New submission`
+                Data: [request._subject]
             }
         },
         Source: `${request.name || "Name unknown"} <your_address@gmail.com>`,
