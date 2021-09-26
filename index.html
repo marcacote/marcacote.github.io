@@ -24,12 +24,13 @@
             e.preventDefault();
             var replyTo = $("#email");
             var name = $("#name");
+            var message = $("#message");
             var data = {
                 "replyTo": replyTo.val(),
                 "name": name.val(),
                 "message": message.val()
             };
-            var url = "<API_GATEWAY_URL>";
+            var url = "https://9m1zywfk09.execute-api.us-east-2.amazonaws.com/default";
             $.ajax({
                 url: url,
                 type: 'POST',
