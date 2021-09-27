@@ -38,10 +38,9 @@
                 data: JSON.stringify(data),
                 dataType: 'json',
                 contentType: "application/json",
-                headers: {
-                    "accept": "application/json",
-                    "Access-Control-Allow-Origin":"*"
-               }
+                success: function(data, status) {
+                    alert("data: " + data + "\n Status: " + status);
+                }
             });
         });
     </script>
