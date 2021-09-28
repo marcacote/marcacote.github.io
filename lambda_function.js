@@ -1,63 +1,30 @@
 var aws = require("aws-sdk");
 
-const successResponse = {
-    "statusCode": 200,
-    "headers": {
-        "Content-Type": "application/json",
-    },
-    "body": JSON.stringify({ message: "Ca a lair de fonctionner" }),
-    "isBase64Encoded": false
-};
+var ses = new aws.SES({ region: "us-east-2" });
 
-const errorResponse = {
-    "statusCode": 500,
-    "headers": {
-        "Content-Type": "application/json",
-    },
-    "body": JSON.stringify({ message: "something bad happen, check logs" }),
-    "isBase64Encoded": false
-};
-
-exports.handler = async(event, context, callback) => {
-    aws.config.update({region: 'eu-west-1'});
-    const requestBody = event.body;
-    const request = JSON.parse(requestBody);
-    console.log(request);
-    const sendToEmail = "YOUR_EMAIL_ADDRESSzxcid8nn56h@gmail.com";
+exports.handler = async(event) => {
+    console.log(event);
+    console.log("hello");
+    
+    //const requestBody = event.body;
+    //const request = event;
+    const request = JSON.parse(event.body);
+    //console.log(request);
+    const sendToEmail = "YOUR_EMAIL@gmail.com";
 
     const params = {
-        Destination: {
-            ToAddresses: [sendToEmail]
-        },
         Message: {
             Body: {
-                Text: {
-                    Charset: "UTF-8",
-                    Data: request.message
-                }
+                Text: { Data: request.message },
             },
-            Subject: {
-                Charset: "UTF-8",
-                Data: "Nouveau message de " + request.name
-            }
+            Subject: { Data: "Nouveau message de " + request.name },
+        },
+        Destination: {
+            ToAddresses: [sendToEmail]
         },
         Source: sendToEmail,
         ReplyToAddresses: [request.replyTo]
     };
 
-    const sendPromise = new aws.SES()
-        .sendEmail(params)
-        .promise();
-
-    await sendPromise
-        .then(data => {
-            console.log(`E-mail sent to ${sendToEmail}`);
-            console.log(successResponse);
-            callback(null, successResponse);
-        })
-        .catch(err => {
-            console.log("E-mail NOT sent", err);
-            console.log(errorResponse);
-            callback(errorResponse);
-        });
+    return ses.sendEmail(params).promise();
 };
