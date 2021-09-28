@@ -4,6 +4,10 @@
  <body>
 
   <div>
+   
+   <!--
+
+   
     <form action="#" id="callbackForm" class="contact-form">
         <div class="form-group">
             <input type="email" required id="email" class="form-control" placeholder="Your email" autocomplete="email" name="email" />
@@ -18,8 +22,22 @@
             Submit
         </button>
     </form>
+-->
+   <form>
+  <label for="name">Name:</label>
+  <input name="name" type="text"/><br/><br/>
+  <label for="email">Email:</label>
+  <input name="email" type="email"/><br/><br/>
+  <label for="name">Message:</label>
+  <textarea name="message"></textarea><br/><br/>
+  <input type="submit"/>
+  <div>
+    <p id="result-text"></p>
+  </div>
+</form>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+     /*
         $("#callbackForm").submit(function(e) {
             e.preventDefault();
             var replyTo = $("#email");
@@ -42,7 +60,43 @@
                     alert("data: " + data + "\n Status: " + status);
                 }
             });
+        });*/
+     
+     const form = document.querySelector("form");
+     form.addEventListener("submit", (event) => {
+     // prevent the form submit from refreshing the page
+     event.preventDefault();
+
+     const { name, email, message } = event.target;
+
+     // Use your API endpoint URL you copied from the previous step
+     const endpoint =
+        "<https://8gsk79kyt7.execute-api.us-east-2.amazonaws.com/prod/sendMail>";
+     // We use JSON.stringify here so the data can be sent as a string via HTTP
+     const body = JSON.stringify({
+        name: name.value,
+        replyTo: email.value,
+        message: message.value
+     });
+     const requestOptions = {
+        method: "POST",
+        body
+     };
+
+     fetch(endpoint, requestOptions)
+        .then((response) => {
+          if (!response.ok) throw new Error("Error in fetch");
+          return response.json();
+        })
+        .then((response) => {
+          document.getElementById("result-text").innerText =
+            "Email sent successfully!";
+        })
+        .catch((error) => {
+          document.getElementById("result-text").innerText =
+            "An unkown error occured.";
         });
+    });
     </script>
 </div>
   
