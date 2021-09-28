@@ -6,10 +6,8 @@ exports.handler = async(event) => {
     console.log(event);
     console.log("hello");
     
-    //const requestBody = event.body;
     //const request = event;
     const request = JSON.parse(event.body);
-    //console.log(request);
     const sendToEmail = "YOUR_EMAIL@gmail.com";
 
     const params = {
